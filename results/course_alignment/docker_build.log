@@ -1,0 +1,94 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.48kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/osrf/ros:humble-desktop
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 135B done
+#3 DONE 0.0s
+
+#4 [ 1/12] FROM docker.io/osrf/ros:humble-desktop@sha256:23e47bb458490403357ded3dceb678406a295a6ae1d9a00fa72ede93efe03bb0
+#4 resolve docker.io/osrf/ros:humble-desktop@sha256:23e47bb458490403357ded3dceb678406a295a6ae1d9a00fa72ede93efe03bb0 done
+#4 DONE 0.0s
+
+#5 [ 3/12] RUN apt-get update && apt-get install -y --no-install-recommends xvfb xauth ffmpeg wmctrl python3-pil && rm -rf /var/lib/apt/lists/*
+#5 CACHED
+
+#6 [ 2/12] RUN apt-get update && apt-get install -y --no-install-recommends ros-humble-gazebo-ros-pkgs ros-humble-turtlebot3-description ros-humble-turtlebot3-gazebo ros-humble-xacro python3-colcon-common-extensions python3-yaml libgl1-mesa-dri mesa-utils && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [ 4/12] RUN apt-get update -o Dir::Etc::sourcelist="sources.list" -o Dir::Etc::sourceparts="-" -o Acquire::http::Timeout="30" && apt-get install -y --no-install-recommends liburdfdom-tools && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [internal] load build context
+#8 transferring context: 4.00kB done
+#8 DONE 0.0s
+
+#9 [ 5/12] RUN if ! getent group "1000" >/dev/null; then groupadd --gid "1000" course; fi; if ! getent passwd "1000" >/dev/null; then useradd --uid "1000" --gid "1000" --home-dir /tmp/micromouse-home --no-create-home course; fi
+#9 DONE 0.1s
+
+#10 [ 6/12] WORKDIR /opt/micromouse
+#10 DONE 0.0s
+
+#11 [ 7/12] COPY src ./src
+#11 DONE 0.0s
+
+#12 [ 8/12] COPY tests ./tests
+#12 DONE 0.0s
+
+#13 [ 9/12] COPY tools ./tools
+#13 DONE 0.0s
+
+#14 [10/12] COPY docker ./docker
+#14 DONE 0.0s
+
+#15 [11/12] COPY compose.yaml ./compose.yaml
+#15 DONE 0.0s
+
+#16 [12/12] RUN source /opt/ros/humble/setup.bash && colcon build --base-paths src --packages-select maze_control && python3 -m unittest discover -s tests -v
+#16 0.404 Starting >>> maze_control
+#16 0.929 Finished <<< maze_control [0.52s]
+#16 0.947 
+#16 0.947 Summary: 1 package finished [0.65s]
+#16 1.015 test_all_maze_walls_have_matching_collisions (test_assets.AssetTests) ... ok
+#16 1.015 test_all_python_parses_without_comments (test_assets.AssetTests) ... ok
+#16 1.049 test_robot_joint_tree_and_plugins (test_assets.AssetTests) ... ok
+#16 1.049 test_angles_wrap_at_pi (test_control.ControlTests) ... ok
+#16 1.049 test_basic_wall_rule_prioritizes_front_and_uses_turn_signs (test_control.ControlTests) ... ok
+#16 1.049 test_corridor_heading_rejects_corner_oversteer (test_control.ControlTests) ... ok
+#16 1.050 test_course_point_gains_and_five_centimeter_tolerance (test_control.ControlTests) ... ok
+#16 1.050 test_course_regions_support_negative_angle_start (test_control.ControlTests) ... ok
+#16 1.050 test_course_regions_use_forward_minimum_and_side_medians (test_control.ControlTests) ... ok
+#16 1.050 test_front_wall_starts_right_turn (test_control.ControlTests) ... ok
+#16 1.051 test_invalid_scan_stops (test_control.ControlTests) ... ok
+#16 1.051 test_point_stops_at_goal (test_control.ControlTests) ... ok
+#16 1.051 test_point_turns_before_driving (test_control.ControlTests) ... ok
+#16 1.051 test_scan_filters_invalid_and_handles_wrap (test_control.ControlTests) ... ok
+#16 1.051 test_turn_preserves_corridor_axis (test_control.ControlTests) ... ok
+#16 1.051 test_compose_parses_and_has_readonly_source (test_docker.DockerTests) ... ok
+#16 1.062 test_shell_scripts_parse (test_docker.DockerTests) ... ok
+#16 1.069 test_stuck_turn_latches_fault (test_simulation.SimulationTests) ... ok
+#16 1.072 test_turn_stops_with_odometry_across_wrap (test_simulation.SimulationTests) ... ok
+#16 1.074 test_wall_following_exits_without_collision (test_simulation.SimulationTests) ... ok
+#16 5.445 test_waypoint_sequence_converges (test_simulation.SimulationTests) ... ok
+#16 5.446 
+#16 5.446 ----------------------------------------------------------------------
+#16 5.446 Ran 21 tests in 4.431s
+#16 5.446 
+#16 5.446 OK
+#16 DONE 5.5s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 0.2s done
+#17 exporting manifest sha256:f4b415bea9728694d185006ec6b6a67dd738fa6528ad81aff185aa89fd02c86e done
+#17 exporting config sha256:bcfb5d6d8bbb51cfaefb282c01837ef4192bf00344192ae24850b59d1abb5250 done
+#17 exporting attestation manifest sha256:f862bee230e1ccc02aa7bea17ffb3e05b9fdbd41df2f45e45775d131bb51ee43 0.0s done
+#17 exporting manifest list sha256:5bf80a54d85063a35162650b9c0b243f52b663709248bc88f060de63178fd2dc done
+#17 naming to docker.io/library/micromouse:humble done
+#17 unpacking to docker.io/library/micromouse:humble 0.1s done
+#17 DONE 0.4s

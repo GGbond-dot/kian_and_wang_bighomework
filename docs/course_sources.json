@@ -1,0 +1,59 @@
+{
+  "read_date": "2026-11-07",
+  "sources": [
+    {
+      "title": "《机器人感知与控制实践》课程考核：",
+      "url": "https://www.yuque.com/shellcore/rpide7/ogornlkgxk4eqrx2",
+      "content_updated_at": "2026-10-29T03:42:44.000Z",
+      "sha256_of_read_content": "90242076d55972d4da607a5267302e8b67fe1f9454e96cf2a33af75ba0fd2b60"
+    },
+    {
+      "title": "Ch6.2 实验6-2 点到点 P 控制",
+      "url": "https://www.yuque.com/shellcore/rpide7/uf21ur1nh3b17swm",
+      "content_updated_at": "2026-10-29T03:32:56.000Z",
+      "sha256_of_read_content": "7298b25e0f9118d9a97500b302cc86008ff2522750c51ee58cdf9dd833e15491"
+    },
+    {
+      "title": "Ch6.3 实验6-3 航点序列跟踪",
+      "url": "https://www.yuque.com/shellcore/rpide7/czkn1yendbfp2fxc",
+      "content_updated_at": "2026-11-02T04:12:12.000Z",
+      "sha256_of_read_content": "491965c372086b01bc88d1aadd976fccab88f83782d980bc8058136c71ba2549"
+    },
+    {
+      "title": "Ch7.2 实验7-1 激光雷达数据处理",
+      "url": "https://www.yuque.com/shellcore/rpide7/kpx2gfger7atm1cg",
+      "content_updated_at": "2026-10-29T03:26:06.000Z",
+      "sha256_of_read_content": "7c783573721a79e9d70579a78561ba38e7ca7783eedf0fdf4eb59f67b7194062"
+    },
+    {
+      "title": "Ch7.3 实验7-2 激光雷达避障实验",
+      "url": "https://www.yuque.com/shellcore/rpide7/zkg7vifg3g2fbo3u",
+      "content_updated_at": "2026-10-27T04:27:51.000Z",
+      "sha256_of_read_content": "e0cb0b9cc2c65608c4c47489de45ad41ed9cc9d2c1ce2625d9576fbccb2d9f6b"
+    },
+    {
+      "title": "Ch7.4 实验7-3 左墙跟随算法实验",
+      "url": "https://www.yuque.com/shellcore/rpide7/yyll3ya9h21p0mgo",
+      "content_updated_at": "2026-10-29T03:39:52.000Z",
+      "sha256_of_read_content": "5b3655ca9073bf12a9002f8b3991a118ea63f742cc81d5df877d3b71ec41a8ba"
+    },
+    {
+      "title": "Ch4.1 Launch 文件：一键启动脚本",
+      "url": "https://www.yuque.com/shellcore/rpide7/cpyscwriox2vnc88",
+      "content_updated_at": "2026-10-13T03:51:15.000Z",
+      "sha256_of_read_content": "2ef9727667f6fa2a8c3e8b52973caa5b135e1f7e9c6c9ff6e69cd153d55b70dc"
+    },
+    {
+      "title": "Ch5.3 实验5-1 创建 URDF 功能包",
+      "url": "https://www.yuque.com/shellcore/rpide7/gn5onn2crxz7l2o4",
+      "content_updated_at": "2026-10-13T03:37:44.000Z",
+      "sha256_of_read_content": "7b87cc6d0dacde1ac4e51b5f160ce4063e77b76c1321e1a2c4018b475ad441df"
+    },
+    {
+      "title": "Ch6.1 实验6-1 安装 TurtleBot3 仿真包",
+      "url": "https://www.yuque.com/shellcore/rpide7/oq74tos94dfsg4ns",
+      "content_updated_at": "2026-10-26T20:58:45.000Z",
+      "sha256_of_read_content": "0dfe625a978190f65c588f3146a9feb25c0a7690a3ed3a8b4c3ee9cf38ca30a5"
+    }
+  ]
+}

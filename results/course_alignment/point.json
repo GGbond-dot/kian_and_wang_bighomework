@@ -1,0 +1,20 @@
+{
+  "name": "point",
+  "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+  "samples": 208,
+  "duration_s": 10.3,
+  "path_length_m": 0.9616,
+  "minimum_front_range_m": 3.5,
+  "final_pose": [
+    0.9616047159164482,
+    -1.0833154865190537e-06,
+    0.00024010224843706556
+  ],
+  "final_state": "DONE",
+  "states": [
+    "DONE",
+    "GOAL_1"
+  ],
+  "success": true,
+  "goal_error_m": 0.03839528409883452
+}

@@ -1,0 +1,23 @@
+{
+  "name": "waypoints",
+  "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+  "samples": 932,
+  "duration_s": 46.5,
+  "path_length_m": 3.9704,
+  "minimum_front_range_m": 3.5,
+  "final_pose": [
+    -0.005685855152926391,
+    0.04016206423162526,
+    -1.4258994788172676
+  ],
+  "final_state": "DONE",
+  "states": [
+    "DONE",
+    "GOAL_1",
+    "GOAL_2",
+    "GOAL_3",
+    "GOAL_4"
+  ],
+  "success": true,
+  "goal_error_m": 0.040562548639912314
+}

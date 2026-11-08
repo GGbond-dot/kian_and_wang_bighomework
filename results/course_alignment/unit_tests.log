@@ -1,0 +1,26 @@
+test_all_maze_walls_have_matching_collisions (test_assets.AssetTests.test_all_maze_walls_have_matching_collisions) ... ok
+test_all_python_parses_without_comments (test_assets.AssetTests.test_all_python_parses_without_comments) ... ok
+test_robot_joint_tree_and_plugins (test_assets.AssetTests.test_robot_joint_tree_and_plugins) ... ok
+test_angles_wrap_at_pi (test_control.ControlTests.test_angles_wrap_at_pi) ... ok
+test_basic_wall_rule_prioritizes_front_and_uses_turn_signs (test_control.ControlTests.test_basic_wall_rule_prioritizes_front_and_uses_turn_signs) ... ok
+test_corridor_heading_rejects_corner_oversteer (test_control.ControlTests.test_corridor_heading_rejects_corner_oversteer) ... ok
+test_course_point_gains_and_five_centimeter_tolerance (test_control.ControlTests.test_course_point_gains_and_five_centimeter_tolerance) ... ok
+test_course_regions_support_negative_angle_start (test_control.ControlTests.test_course_regions_support_negative_angle_start) ... ok
+test_course_regions_use_forward_minimum_and_side_medians (test_control.ControlTests.test_course_regions_use_forward_minimum_and_side_medians) ... ok
+test_front_wall_starts_right_turn (test_control.ControlTests.test_front_wall_starts_right_turn) ... ok
+test_invalid_scan_stops (test_control.ControlTests.test_invalid_scan_stops) ... ok
+test_point_stops_at_goal (test_control.ControlTests.test_point_stops_at_goal) ... ok
+test_point_turns_before_driving (test_control.ControlTests.test_point_turns_before_driving) ... ok
+test_scan_filters_invalid_and_handles_wrap (test_control.ControlTests.test_scan_filters_invalid_and_handles_wrap) ... ok
+test_turn_preserves_corridor_axis (test_control.ControlTests.test_turn_preserves_corridor_axis) ... ok
+test_compose_parses_and_has_readonly_source (test_docker.DockerTests.test_compose_parses_and_has_readonly_source) ... ok
+test_shell_scripts_parse (test_docker.DockerTests.test_shell_scripts_parse) ... ok
+test_stuck_turn_latches_fault (test_simulation.SimulationTests.test_stuck_turn_latches_fault) ... ok
+test_turn_stops_with_odometry_across_wrap (test_simulation.SimulationTests.test_turn_stops_with_odometry_across_wrap) ... ok
+test_wall_following_exits_without_collision (test_simulation.SimulationTests.test_wall_following_exits_without_collision) ... ok
+test_waypoint_sequence_converges (test_simulation.SimulationTests.test_waypoint_sequence_converges) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 4.935s
+
+OK

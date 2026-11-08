@@ -1,0 +1,21 @@
+{
+  "name": "avoid",
+  "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+  "samples": 290,
+  "duration_s": 14.4,
+  "path_length_m": 1.514,
+  "minimum_front_range_m": 0.4551827609539032,
+  "final_pose": [
+    0.901757844646507,
+    -0.9588967140842704,
+    -1.3117493216273213
+  ],
+  "final_state": "FORWARD",
+  "states": [
+    "AVOID",
+    "FORWARD"
+  ],
+  "success": true,
+  "minimum_body_clearance_m": 0.1531,
+  "body_envelope_radius_m": 0.13
+}

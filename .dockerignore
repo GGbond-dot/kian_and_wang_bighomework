@@ -1,0 +1,11 @@
+**
+!src
+!src/**
+!tests
+!tests/**
+!tools
+!tools/**
+!docker
+!docker/**
+!Dockerfile
+!compose.yaml

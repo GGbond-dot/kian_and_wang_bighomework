@@ -1,0 +1,68 @@
+[INFO] [launch]: All log files can be found below /tmp/maze-course-home/.ros/log/2026-11-08-06-40-13-222950-kianSONG-38
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [gzserver-1]: process started with pid [39]
+[INFO] [gzclient-2]: process started with pid [41]
+[INFO] [robot_state_publisher-3]: process started with pid [43]
+[INFO] [spawn_entity.py-4]: process started with pid [45]
+[INFO] [scan_region-5]: process started with pid [47]
+[INFO] [rviz2-6]: process started with pid [49]
+[rviz2-6] QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-course'
+[robot_state_publisher-3] [INFO] [1794120013.534013034] [robot_state_publisher]: got segment base_footprint
+[robot_state_publisher-3] [INFO] [1794120013.534131550] [robot_state_publisher]: got segment base_link
+[robot_state_publisher-3] [INFO] [1794120013.534147637] [robot_state_publisher]: got segment base_scan
+[robot_state_publisher-3] [INFO] [1794120013.534159074] [robot_state_publisher]: got segment caster_back_link
+[robot_state_publisher-3] [INFO] [1794120013.534169790] [robot_state_publisher]: got segment imu_link
+[robot_state_publisher-3] [INFO] [1794120013.534180047] [robot_state_publisher]: got segment wheel_left_link
+[robot_state_publisher-3] [INFO] [1794120013.534190030] [robot_state_publisher]: got segment wheel_right_link
+[rviz2-6] [INFO] [1794120013.694263412] [rviz2]: Stereo is NOT SUPPORTED
+[rviz2-6] [INFO] [1794120013.694369334] [rviz2]: OpenGl version: 4.5 (GLSL 4.5)
+[rviz2-6] [INFO] [1794120013.748664966] [rviz2]: Stereo is NOT SUPPORTED
+[spawn_entity.py-4] [INFO] [1794120013.784555257] [spawn_entity]: Spawn Entity started
+[spawn_entity.py-4] [INFO] [1794120013.784820692] [spawn_entity]: Loading entity XML from file /tmp/tmphjwn32db.sdf
+[spawn_entity.py-4] [INFO] [1794120013.785379656] [spawn_entity]: Waiting for service /spawn_entity, timeout = 60
+[spawn_entity.py-4] [INFO] [1794120013.785583937] [spawn_entity]: Waiting for service /spawn_entity
+[gzserver-1] ALSA lib confmisc.c:855:(parse_card) cannot find card '0'
+[gzserver-1] ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_card_inum returned error: No such file or directory
+[gzserver-1] ALSA lib confmisc.c:422:(snd_func_concat) error evaluating strings
+[gzserver-1] ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_concat returned error: No such file or directory
+[gzserver-1] ALSA lib confmisc.c:1334:(snd_func_refer) error evaluating name
+[gzserver-1] ALSA lib conf.c:5178:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
+[gzserver-1] ALSA lib conf.c:5701:(snd_config_expand) Evaluate error: No such file or directory
+[gzserver-1] ALSA lib pcm.c:2664:(snd_pcm_open_noupdate) Unknown PCM default
+[gzserver-1] AL lib: (EE) ALCplaybackAlsa_open: Could not open playback device 'default': No such file or directory
+[spawn_entity.py-4] [INFO] [1794120014.288622054] [spawn_entity]: Calling service /spawn_entity
+[gzserver-1] [INFO] [1794120014.553784642] [turtlebot3_imu]: <initial_orientation_as_reference> is unset, using default value of false to comply with REP 145 (world as orientation reference)
+[spawn_entity.py-4] [INFO] [1794120014.602317275] [spawn_entity]: Spawn status: SpawnEntity: Successfully spawned entity [burger]
+[scan_region-5] [INFO] [1794120014.623973818] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[gzserver-1] [INFO] [1794120014.712960060] [turtlebot3_diff_drive]: Wheel pair 1 separation set to [0.160000m]
+[gzserver-1] [INFO] [1794120014.712993851] [turtlebot3_diff_drive]: Wheel pair 1 diameter set to [0.066000m]
+[gzserver-1] [INFO] [1794120014.713674511] [turtlebot3_diff_drive]: Subscribed to [/cmd_vel]
+[gzserver-1] [INFO] [1794120014.715173366] [turtlebot3_diff_drive]: Advertise odometry on [/odom]
+[gzserver-1] [INFO] [1794120014.716603551] [turtlebot3_diff_drive]: Publishing odom transforms between [odom] and [base_footprint]
+[gzserver-1] [INFO] [1794120014.722998086] [turtlebot3_joint_state]: Going to publish joint [wheel_left_joint]
+[gzserver-1] [INFO] [1794120014.723032033] [turtlebot3_joint_state]: Going to publish joint [wheel_right_joint]
+[INFO] [spawn_entity.py-4]: process has finished cleanly [pid 45]
+[scan_region-5] [INFO] [1794120015.727626348] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120016.748342154] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120017.746441966] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120018.753555635] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120019.760945307] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120020.756717036] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120021.759673771] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120022.767789636] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120023.776140369] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[scan_region-5] [INFO] [1794120024.769580035] [scan_region_filter_node]: front_dist=3.50 m left_dist=3.50 m right_dist=3.50 m
+[WARNING] [launch]: user interrupted with ctrl-c (SIGINT)
+[INFO] [rviz2-6]: sending signal 'SIGINT' to process[rviz2-6]
+[INFO] [scan_region-5]: sending signal 'SIGINT' to process[scan_region-5]
+[INFO] [robot_state_publisher-3]: sending signal 'SIGINT' to process[robot_state_publisher-3]
+[INFO] [gzclient-2]: sending signal 'SIGINT' to process[gzclient-2]
+[INFO] [gzserver-1]: sending signal 'SIGINT' to process[gzserver-1]
+[rviz2-6] [INFO] [1794120025.072165897] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[robot_state_publisher-3] [INFO] [1794120025.072773866] [rclcpp]: signal_handler(SIGINT/SIGTERM)
+[INFO] [robot_state_publisher-3]: process has finished cleanly [pid 43]
+[INFO] [scan_region-5]: process has finished cleanly [pid 47]
+[INFO] [gzclient-2]: process has finished cleanly [pid 41]
+[INFO] [gzserver-1]: process has finished cleanly [pid 39]
+[INFO] [rviz2-6]: process has finished cleanly [pid 49]
+PASS: scan mode started Gazebo/RViz and shut down before the virtual display closed

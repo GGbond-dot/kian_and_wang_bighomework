@@ -1,0 +1,10 @@
+{
+  "reference_sha256": "a294fc3eee56ca4a9cf848ed4cca4fae07ed8536ffbe2ad0274ab6ebf393bc44",
+  "pages_inspected": 13,
+  "preserved_original_parts": 19,
+  "original_relationships_preserved": true,
+  "section_geometry_preserved": true,
+  "placeholder_check": "passed",
+  "new_code_comments": 0,
+  "gazebo_rerun": "not needed; documentation only; existing current records reused"
+}

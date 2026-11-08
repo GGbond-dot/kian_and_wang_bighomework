@@ -1,0 +1,138 @@
+{
+  "course_reference": "https://www.yuque.com/shellcore/rpide7",
+  "ros_package": "maze_control",
+  "unit_tests": 21,
+  "shutdown_communication_check": "passed; synthetic sensor data, final zero Twist on SIGINT",
+  "gazebo_cases": {
+    "point": {
+      "name": "point",
+      "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+      "samples": 208,
+      "duration_s": 10.3,
+      "path_length_m": 0.9616,
+      "minimum_front_range_m": 3.5,
+      "final_pose": [
+        0.9616047159164482,
+        -1.0833154865190537e-06,
+        0.00024010224843706556
+      ],
+      "final_state": "DONE",
+      "states": [
+        "DONE",
+        "GOAL_1"
+      ],
+      "success": true,
+      "goal_error_m": 0.03839528409883452
+    },
+    "adaptive": {
+      "name": "adaptive",
+      "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+      "samples": 2824,
+      "duration_s": 141.1,
+      "path_length_m": 16.9291,
+      "minimum_front_range_m": 0.24210146069526672,
+      "final_pose": [
+        4.36922720491839,
+        0.5351333838684771,
+        0.3303532689830752
+      ],
+      "final_state": "DONE",
+      "states": [
+        "ADVANCE",
+        "CLEAR",
+        "DONE",
+        "FOLLOW",
+        "TURN"
+      ],
+      "success": true,
+      "minimum_body_clearance_m": 0.0864,
+      "body_envelope_radius_m": 0.13
+    },
+    "avoid": {
+      "name": "avoid",
+      "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+      "samples": 290,
+      "duration_s": 14.4,
+      "path_length_m": 1.514,
+      "minimum_front_range_m": 0.4551827609539032,
+      "final_pose": [
+        0.901757844646507,
+        -0.9588967140842704,
+        -1.3117493216273213
+      ],
+      "final_state": "FORWARD",
+      "states": [
+        "AVOID",
+        "FORWARD"
+      ],
+      "success": true,
+      "minimum_body_clearance_m": 0.1531,
+      "body_envelope_radius_m": 0.13
+    },
+    "basic": {
+      "name": "basic",
+      "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+      "samples": 575,
+      "duration_s": 57.4,
+      "path_length_m": 8.1292,
+      "minimum_front_range_m": 0.2922408878803253,
+      "final_pose": [
+        3.9531615091447634,
+        -2.590854408997173,
+        0.13090712729688272
+      ],
+      "final_state": "DONE",
+      "states": [
+        "ADJUST_LEFT",
+        "ADJUST_RIGHT",
+        "DONE",
+        "FOLLOW",
+        "TURN_RIGHT"
+      ],
+      "success": true
+    },
+    "waypoints": {
+      "name": "waypoints",
+      "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+      "samples": 932,
+      "duration_s": 46.5,
+      "path_length_m": 3.9704,
+      "minimum_front_range_m": 3.5,
+      "final_pose": [
+        -0.005685855152926391,
+        0.04016206423162526,
+        -1.4258994788172676
+      ],
+      "final_state": "DONE",
+      "states": [
+        "DONE",
+        "GOAL_1",
+        "GOAL_2",
+        "GOAL_3",
+        "GOAL_4"
+      ],
+      "success": true,
+      "goal_error_m": 0.040562548639912314
+    },
+    "open_loop": {
+      "name": "open_loop",
+      "model": "official TurtleBot3 Burger in Gazebo Classic 11",
+      "samples": 128,
+      "duration_s": 6.3,
+      "path_length_m": 0.3907,
+      "minimum_front_range_m": 3.5,
+      "final_pose": [
+        0.3797621604740684,
+        -0.00899563366133702,
+        1.537940207794557
+      ],
+      "final_state": "DONE",
+      "states": [
+        "DONE",
+        "OPEN_STRAIGHT",
+        "OPEN_TURN"
+      ],
+      "success": true
+    }
+  }
+}
