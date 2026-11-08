@@ -14,8 +14,9 @@ from rclpy.qos import qos_profile_sensor_data
 from rclpy.signals import SignalHandlerOptions
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import String
+from std_srvs.srv import Empty, Trigger
 
-from .control import BasicWallFollower, Pose, Scan, WallFollower, course_regions, point_control, sectors
+from .control import BasicWallFollower, Pose, Scan, WallFollower, course_regions, point_control, pose_goal_control, sectors
 
 
 class Controller(Node):
@@ -30,7 +31,7 @@ class Controller(Node):
             'goal': '[1.0, 0.0]',
             'waypoints': '[[1.0,0.0],[1.0,1.0],[0.0,1.0],[0.0,0.0]]',
             'kp_distance': 0.3, 'kp_angle': 0.8, 'goal_tolerance': 0.05,
-            'max_angular': 1.0, 'safe_distance': 0.8,
+            'goal_yaw_tolerance': 0.05, 'max_angular': 1.0, 'safe_distance': 0.8,
             'forward_speed': 0.15, 'turn_speed': 0.3,
             'front_danger': 0.35, 'wall_speed': 0.15, 'wall_turn_speed': 0.6,
             'exit_x': 4.35, 'exit_y_min': 0.15, 'exit_y_max': 0.85,
@@ -54,6 +55,7 @@ class Controller(Node):
         self.ready_since = None
         self.index = 0
         self.done = False
+        self.manual_goal = None
         self.path = RosPath()
         self.path.header.frame_id = 'odom'
         self.publisher = self.create_publisher(Twist, 'cmd_vel', 10)
@@ -61,6 +63,10 @@ class Controller(Node):
         self.path_pub = self.create_publisher(RosPath, 'trajectory', 10)
         self.create_subscription(Odometry, 'odom', self.receive_odom, qos_profile_sensor_data)
         self.create_subscription(LaserScan, 'scan', self.receive_scan, qos_profile_sensor_data)
+        if self.mode == 'wall':
+            self.create_subscription(PoseStamped, 'goal_pose', self.receive_goal, 10)
+            self.reset_client = self.create_client(Empty, 'reset_world')
+            self.create_service(Trigger, 'restart_maze', self.restart_maze)
         logfile = Path(self.param('log_file')).expanduser()
         logfile.parent.mkdir(parents=True, exist_ok=True)
         self.stream = logfile.open('w', newline='')
@@ -87,6 +93,44 @@ class Controller(Node):
     def receive_scan(self, msg):
         self.scan = Scan(msg.ranges, msg.angle_min, msg.angle_increment, msg.range_min, msg.range_max)
         self.scan_time = time.monotonic()
+
+    def receive_goal(self, msg):
+        p, q = msg.pose.position, msg.pose.orientation
+        values = (p.x, p.y, q.x, q.y, q.z, q.w)
+        if msg.header.frame_id not in ('', 'odom') or not all(math.isfinite(v) for v in values) or sum(v * v for v in (q.x, q.y, q.z, q.w)) < 1e-12:
+            self.get_logger().error('RViz 目标必须是 odom 坐标系中的有限位姿')
+            return
+        yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
+        self.manual_goal = Pose(p.x, p.y, yaw)
+        self.done = False
+        self.reset_follower()
+        self.get_logger().info(f'收到 RViz 目标: x={p.x:.3f}, y={p.y:.3f}, yaw={yaw:.3f}')
+
+    def reset_follower(self):
+        self.follower = WallFollower(self.param('target_distance'), self.param('max_speed'), self.param('adaptive'))
+
+    def restart_maze(self, request, response):
+        if not self.reset_client.service_is_ready():
+            response.success = False
+            response.message = 'Gazebo reset_world service is not ready'
+            return response
+        self.publish(0, 0, 'RESETTING')
+        self.reset_client.call_async(Empty.Request())
+        self.manual_goal = None
+        self.index = 0
+        self.done = False
+        self.started = None
+        self.ready_since = None
+        self.pose = None
+        self.scan = None
+        self.pose_time = self.scan_time = -math.inf
+        self.reset_follower()
+        self.path = RosPath()
+        self.path.header.frame_id = 'odom'
+        self.path_pub.publish(self.path)
+        response.success = True
+        response.message = 'Maze reset requested; wall following will resume from the start'
+        return response
 
     def publish(self, v, w, state):
         msg = Twist()
@@ -116,7 +160,12 @@ class Controller(Node):
         state = 'DONE'
         if not self.done:
             if self.mode in ('wall', 'wall_basic'):
-                if self.pose.x >= self.param('exit_x') and self.param('exit_y_min') <= self.pose.y <= self.param('exit_y_max'):
+                if self.mode == 'wall' and self.manual_goal is not None:
+                    v, w, reached, state = pose_goal_control(self.pose, self.manual_goal, self.param('max_speed'), self.param('goal_tolerance'), self.param('goal_yaw_tolerance'), self.param('kp_distance'), self.param('kp_angle'), self.param('max_angular'))
+                    if reached:
+                        self.manual_goal = None
+                        self.reset_follower()
+                elif self.pose.x >= self.param('exit_x') and self.param('exit_y_min') <= self.pose.y <= self.param('exit_y_max'):
                     self.done = True
                 else:
                     if self.mode == 'wall_basic':
