@@ -20,6 +20,7 @@ setup(
         'controller = maze_control.node:main',
         'scan_region = maze_control.perception:main',
         'scan_features = maze_control.perception:main',
+        'maze_reset_marker = maze_control.reset_marker:main',
         'tb3_point2point = maze_control.tb3_point2point:main',
         'tb3_waypoints = maze_control.tb3_waypoints:main',
         'tb3_avoid = maze_control.tb3_avoid:main',

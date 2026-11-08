@@ -73,6 +73,12 @@ def configure(context):
             'waypoints': ParameterValue(LaunchConfiguration('waypoints'), value_type=str),
             'log_file': ParameterValue(LaunchConfiguration('log_file'), value_type=str),
         }], output='screen'))
+    if mode == 'wall':
+        actions.append(Node(package='maze_control', executable='maze_reset_marker', parameters=[{
+            'use_sim_time': True,
+            'start_x': number('x'),
+            'start_y': number('y'),
+        }], output='screen'))
     return actions
 
 

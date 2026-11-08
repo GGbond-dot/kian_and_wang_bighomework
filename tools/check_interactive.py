@@ -11,9 +11,20 @@ from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import String
 from std_srvs.srv import Empty, Trigger
+from visualization_msgs.msg import InteractiveMarkerFeedback
+
+from maze_control.reset_marker import make_reset_marker
 
 
 def main():
+    marker = make_reset_marker(0.5, 0.5)
+    quaternions = [
+        marker.pose.orientation,
+        *(control.orientation for control in marker.controls),
+        *(item.pose.orientation for control in marker.controls for item in control.markers),
+    ]
+    if any(abs(value.w - 1.0) > 1e-12 for value in quaternions):
+        raise RuntimeError('Reset marker contains an invalid zero quaternion')
     rclpy.init()
     node = rclpy.create_node('interactive_maze_verification')
     commands = []
@@ -24,10 +35,13 @@ def main():
     scan_pub = node.create_publisher(LaserScan, 'scan', 10)
     odom_pub = node.create_publisher(Odometry, 'odom', 10)
     goal_pub = node.create_publisher(PoseStamped, 'goal_pose', 10)
+    feedback_pub = node.create_publisher(InteractiveMarkerFeedback, 'maze_reset/feedback', 10)
     node.create_service(Empty, 'reset_world', lambda request, response: resets.append(True) or response)
     reset_client = node.create_client(Trigger, 'restart_maze')
     executable = os.path.join(get_package_prefix('maze_control'), 'lib', 'maze_control', 'tb3_wall_follower_optimized')
+    marker_executable = os.path.join(get_package_prefix('maze_control'), 'lib', 'maze_control', 'maze_reset_marker')
     process = subprocess.Popen([executable, '--ros-args', '-p', 'exit_x:=99.0', '-p', 'log_file:=/tmp/interactive_check.csv'], start_new_session=True)
+    marker_process = subprocess.Popen([marker_executable], start_new_session=True)
 
     def sensors(x, y, yaw):
         scan = LaserScan()
@@ -71,12 +85,18 @@ def main():
         wait_for('RVIZ_REACHED', 0.5, 0.8, 0.0)
         if not reset_client.wait_for_service(timeout_sec=3):
             raise RuntimeError('restart_maze service was not available')
-        future = reset_client.call_async(Trigger.Request())
+        feedback = InteractiveMarkerFeedback()
+        feedback.header.frame_id = 'odom'
+        feedback.client_id = 'verification'
+        feedback.marker_name = 'restart_maze'
+        feedback.control_name = 'reset_button'
+        feedback.event_type = InteractiveMarkerFeedback.BUTTON_CLICK
         deadline = time.monotonic() + 5
-        while time.monotonic() < deadline and (not future.done() or not resets):
+        while time.monotonic() < deadline and not resets:
+            feedback_pub.publish(feedback)
             rclpy.spin_once(node, timeout_sec=0.05)
-        if not future.done() or not future.result().success or not resets:
-            raise RuntimeError('Maze restart did not call Gazebo reset_world')
+        if not resets or 'RESETTING' not in states:
+            raise RuntimeError('RViz reset marker did not call Gazebo reset_world')
         wait_for('FOLLOW', 0.5, 0.5, math.pi / 2)
         process.send_signal(signal.SIGINT)
         deadline = time.monotonic() + 5
@@ -89,6 +109,9 @@ def main():
         if process.poll() is None:
             process.kill()
             process.wait()
+        if marker_process.poll() is None:
+            marker_process.kill()
+            marker_process.wait()
         node.destroy_node()
         rclpy.shutdown()
 

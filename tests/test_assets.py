@@ -5,6 +5,8 @@ import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -39,3 +41,10 @@ class AssetTests(unittest.TestCase):
                 self.assertEqual(model.findtext('static'), 'true')
                 count += 1
         self.assertEqual(count, 7)
+
+    def test_maze_rviz_exposes_goal_and_reset_controls(self):
+        config = yaml.safe_load((ROOT / 'src/maze_control/config/maze.rviz').read_text())
+        tools = config['Visualization Manager']['Tools']
+        displays = config['Visualization Manager']['Displays']
+        self.assertTrue(any(tool.get('Class') == 'rviz_default_plugins/SetGoal' and tool.get('Topic') == '/goal_pose' for tool in tools))
+        self.assertTrue(any(display.get('Class') == 'rviz_default_plugins/InteractiveMarkers' and display.get('Interactive Markers Namespace') == '/maze_reset' for display in displays))
