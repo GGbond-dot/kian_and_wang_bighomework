@@ -16,6 +16,17 @@ bash tools/docker.sh wall
 
 `wall` 是原先的优化迷宫模式，启动 Gazebo、RViz、机器人、测距节点和控制器。每次运行自动把挂载的当前源码编译到容器 `/tmp`，避免混用宿主 Jazzy 的 build/install。按 Ctrl+C 退出；重新启动会复位场景。不要同时运行两套速度控制节点。
 
+### RViz 临时目标与仿真复位
+
+`wall` 启动后可以在迷宫运行期间临时接管机器人：
+
+1. 在 RViz 顶部选择 `2D Goal Pose`。
+2. 在无障碍的走廊位置按下鼠标并拖出箭头，箭头方向就是最终朝向。
+3. 控制器先到达箭头起点，再原地对准箭头方向，随后自动恢复墙跟随迷宫任务。
+4. 需要重新演示时，选择 RViz 顶部的 `Interact`，点击起点附近的红色 `RESET` 标记。Gazebo 会把机器人瞬间复位到出生状态，清空本轮控制状态和轨迹，然后继续迷宫任务。
+
+这个功能使用 `/goal_pose` 和 `/restart_maze`。目标控制是直接的 P 控制，不包含路径规划；演示时应把目标放在当前可直达且不会穿墙的走廊内。RViz 左下角自带的 `Reset` 只重置显示，迷宫复位应点击地图里的红色 `RESET`。
+
 ## 按课程顺序运行
 
 每条命令是一套独立实验，先 Ctrl+C 关闭上一套，再运行下一条。
@@ -90,7 +101,7 @@ Ubuntu 24 宿主机无需安装 Humble。上面原生 ROS 命令在 Docker 内�
 
 world 只保存环境，不包含机器人实体；机器人由 launch 单独生成一次。URDF 提供给 robot_state_publisher/RViz，官方 SDF 提供给 Gazebo。简化自编模型可用 `robot:=simplified` 切换。
 
-每个场景有对应 RViz 配置，默认固定坐标系 `odom`，显示 RobotModel、LaserScan、TF、轨迹；`fixed_frame:=base_link` 便于课程的机器人中心观测。墙体均有碰撞，SDF pose 使用完整六项值，墙高保证激光可命中。
+每个场景有对应 RViz 配置，默认固定坐标系 `odom`，显示 RobotModel、LaserScan、TF、轨迹；`wall` 模式还显示交互复位标记并接收 `2D Goal Pose`。`fixed_frame:=base_link` 便于课程的机器人中心观测。墙体均有碰撞，SDF pose 使用完整六项值，墙高保证激光可命中。
 
 ## 检查与数据
 
@@ -109,6 +120,7 @@ bash tools/docker.sh headless
 
 - [control.py](src/maze_control/maze_control/control.py)：P 控制、课程分区、基础与优化墙跟随。
 - [node.py](src/maze_control/maze_control/node.py)：话题、目标切换、超时保护、日志和退出停车。
+- [reset_marker.py](src/maze_control/maze_control/reset_marker.py)：RViz 红色复位标记与 `/restart_maze` 服务调用。
 - [perception.py](src/maze_control/maze_control/perception.py)：分区测距发布与打印。
 - [课程对照说明](docs/course_alignment.md)：逐项来源、采用方式和必要修正。
 

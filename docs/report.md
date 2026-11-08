@@ -12,7 +12,7 @@
 
 宿主机为 Ubuntu 24.04。为与课程的软件版本一致，Docker 内使用 Ubuntu 22.04、ROS2 Humble、Python 3.10 与 Gazebo Classic 11。官方 Burger 用于当前动力学实验，另提供简化自编 URDF 供模型结构学习与切换。运行时编译当前挂载源码，避免混用宿主 Jazzy 的构建产物。
 
-Gazebo 负责物理、碰撞和传感器，向 ROS 发布 /scan 与 /odom。Controller 订阅原始传感器，调用 control.py 的纯算法或状态机，向 /cmd_vel 发布 Twist。差速驱动执行后，新的激光与里程计形成反馈。RViz 展示 RobotModel、LaserScan、TF 与轨迹，不承担物理计算。
+Gazebo 负责物理、碰撞和传感器，向 ROS 发布 /scan 与 /odom。Controller 订阅原始传感器，调用 control.py 的纯算法或状态机，向 /cmd_vel 发布 Twist。差速驱动执行后，新的激光与里程计形成反馈。RViz 展示 RobotModel、LaserScan、TF 与轨迹，并在优化迷宫模式发布临时目标或触发仿真复位，不承担物理计算。
 
 scan_region 独立订阅 /scan，发布 /wall_distances 并打印距离，便于观察。控制器直接复用同一分区函数处理原始扫描，不依赖该监视话题。/trajectory 与 /controller_state 分别提供轨迹和状态，CSV 保存时间、位姿、指令速度、分区距离与状态，便于结果追溯。
 
@@ -26,7 +26,7 @@ empty.world 以原点为出生位置，用于点控制、闭环矩形航点、�
 
 URDF 描述 link、joint、visual、collision 和 inertial，并由 robot_state_publisher 提供机器人坐标关系；Gazebo 使用官方 Burger SDF 加载驱动和激光插件。简化 URDF 通过 robot:=simplified 切换，已通过结构检查；本报告的六项动力学结果均来自官方 Burger，不混用模型来源。
 
-每种世界配套 RViz 配置。默认 Fixed Frame 为 odom，便于查看整段轨迹；课程原地测距可切换 base_link，便于观察机器人中心的激光方向。出口以配置的里程计坐标区域判定，改变场景时需同步修改出生点与出口参数。
+每种世界配套 RViz 配置。默认 Fixed Frame 为 odom，便于查看整段轨迹；课程原地测距可切换 base_link，便于观察机器人中心的激光方向。优化迷宫模式可用 2D Goal Pose 临时指定位置与最终朝向，到达后自动恢复墙跟随；起点处的红色 RESET 交互标记调用 Gazebo 世界复位并重新开始任务。临时目标使用直接 P 控制，不承担绕障路径规划。出口以配置的里程计坐标区域判定，改变场景时需同步修改出生点和出口参数。
 
 ## 4 算法原理设计
 
@@ -79,7 +79,7 @@ node.py 以定时器驱动控制，大多数模式为 20 Hz，基础墙跟随为
 
 ## 5 测试结果与问题分析
 
-当前验证使用 Docker 中的官方 Burger、Gazebo 真实传感器插件与里程计。21 项自动化检查通过，覆盖扫描角度范围、非法测量、P 控制容差、航点配置、基础转向与资源配置等。下表时间为保存记录中的仿真控制时长，不是视频播放时长或宿主启动耗时。
+当前验证使用 Docker 中的官方 Burger、Gazebo 真实传感器插件与里程计。25 项自动化检查通过，覆盖扫描角度范围、非法测量、P 控制容差、最终朝向、航点配置、基础转向与 RViz 资源配置等。另有 ROS 通信联调验证临时目标、最终朝向、交互复位和墙跟随恢复。下表时间为保存记录中的仿真控制时长，不是视频播放时长或宿主启动耗时。
 
 | 实验 | 时长 s | 路程 m | 结果 |
 |---|---:|---:|---|
