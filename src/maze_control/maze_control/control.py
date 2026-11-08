@@ -68,6 +68,16 @@ def point_control(pose, goal, max_speed=0.2, tolerance=0.05, kp_distance=0.3, kp
     return linear, angular, False
 
 
+def pose_goal_control(pose, goal, max_speed=0.2, position_tolerance=0.05, yaw_tolerance=0.05, kp_distance=0.3, kp_angle=0.8, max_angular=1.0):
+    linear, angular, reached = point_control(pose, (goal.x, goal.y), max_speed, position_tolerance, kp_distance, kp_angle, max_angular)
+    if not reached:
+        return linear, angular, False, 'RVIZ_GOAL'
+    error = wrap(goal.yaw - pose.yaw)
+    if abs(error) > yaw_tolerance:
+        return 0.0, clamp(kp_angle * error, -max_angular, max_angular), False, 'RVIZ_ALIGN'
+    return 0.0, 0.0, True, 'RVIZ_REACHED'
+
+
 class BasicWallFollower:
     def __init__(self, target=0.4, front_danger=0.35, speed=0.15, turn_speed=0.6):
         self.target = target

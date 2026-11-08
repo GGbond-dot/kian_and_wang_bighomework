@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src' / 'maze_control'))
-from maze_control.control import BasicWallFollower, Pose, Scan, WallFollower, course_regions, point_control, sector_distance, wrap
+from maze_control.control import BasicWallFollower, Pose, Scan, WallFollower, course_regions, point_control, pose_goal_control, sector_distance, wrap
 
 
 class ControlTests(unittest.TestCase):
@@ -58,6 +58,26 @@ class ControlTests(unittest.TestCase):
         self.assertEqual(v, 0)
         self.assertGreater(abs(w), 0)
         self.assertFalse(done)
+
+    def test_pose_goal_drives_to_position_before_final_heading(self):
+        v, w, done, state = pose_goal_control(Pose(0, 0, 0), Pose(1, 0, math.pi / 2))
+        self.assertGreater(v, 0)
+        self.assertEqual(w, 0)
+        self.assertFalse(done)
+        self.assertEqual(state, 'RVIZ_GOAL')
+
+    def test_pose_goal_aligns_heading_after_reaching_position(self):
+        v, w, done, state = pose_goal_control(Pose(1, 1, 0), Pose(1.01, 1, math.pi / 2))
+        self.assertEqual(v, 0)
+        self.assertGreater(w, 0)
+        self.assertFalse(done)
+        self.assertEqual(state, 'RVIZ_ALIGN')
+
+    def test_pose_goal_finishes_with_wrapped_heading_error(self):
+        v, w, done, state = pose_goal_control(Pose(1, 1, math.pi - 0.01), Pose(1, 1, -math.pi + 0.01))
+        self.assertEqual((v, w), (0.0, 0.0))
+        self.assertTrue(done)
+        self.assertEqual(state, 'RVIZ_REACHED')
 
     def test_invalid_scan_stops(self):
         self.assertEqual(WallFollower().step(Pose(0, 0, 0), None, 0), (0.0, 0.0))
